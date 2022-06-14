@@ -9,16 +9,20 @@
 # 使い方
 
 ```shell
-git clone https://github.com/peco2282/DESGenerator.git
+$ git clone https://github.com/peco2282/DESGenerator.git
 ```
 ### コマンドプロンプトで動かす
 
 1. kotlinをインストール、pathを通す。[参考](https://shotanukumizu-1000.hatenablog.com/entry/20210909)
-2. コマンドプロンプトで `DESGenerator` フォルダに行き、`kotlinc -d DESGenerator.jar -include-runtime src/main/kotlin/Main.kt` を実行
-3. `kotlin -cp DESGenerator.jar MainKt 平文(64bit)  鍵(64bit)`
-   (例: `kotlin -cp DESGenerator.jar MainKt 00111010....(64bit-Plain)  1010010111....(64bit-Key)`)
+2. コマンドプロンプトで `DESGenerator` フォルダに行き、`kotlinc -d DESGenerator.jar -include-runtime src/main/kotlin/Encode.kt` を実行
+3. `kotlin -cp DESGenerator.jar EncodeKt 平文(64bit)  鍵(64bit)`
+   (例: `kotlin -cp DESGenerator.jar EncodeKt 00111010....(64bit-Plain)  1010010111....(64bit-Key)`)
 
  16段目, 平文暗号が最後に出力されれば成功。
+
+ターミナルではなくてファイルとして出力したい場合
+
+`kotlin -cp DESGenerator.jar EncodeKt 平文(64bit)  鍵(64bit) >> encode.txt`
 
 ---
 ### Intellij側から動かす。
