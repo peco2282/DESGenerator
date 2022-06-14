@@ -11,6 +11,17 @@
 ```shell
 git clone https://github.com/peco2282/DESGenerator.git
 ```
+### コマンドプロンプトで動かす
+
+1. kotlinをインストール、pathを通す。[参考](https://shotanukumizu-1000.hatenablog.com/entry/20210909)
+2. コマンドプロンプトで `DESGenerator` フォルダに行き、`kotlinc -d DESGenerator.jar -include-runtime src/main/kotlin/Main.kt` を実行
+3. `kotlin -cp DESGenerator.jar MainKt 平文(64bit)  鍵(64bit)`
+   (例: `kotlin -cp DESGenerator.jar MainKt 00111010....(64bit-Plain)  1010010111....(64bit-Key)`)
+
+ 16段目, 平文暗号が最後に出力されれば成功。
+
+---
+### Intellij側から動かす。
 
 1. Injellij-IDEA で `DESGenerator` フォルダを開く。
 2. 右上の `実行環境の編集` を開く。 
