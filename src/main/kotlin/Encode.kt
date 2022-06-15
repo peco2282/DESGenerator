@@ -142,6 +142,16 @@ val pArray: Array<Int> = arrayOf(
   19, 13, 30,  6,
   22, 11,  4, 25
 )
+val finalArray: Array<Int> = arrayOf(
+  40, 8, 48, 16, 56, 24, 64, 32,
+  39, 7, 47, 15, 55, 23, 63, 31,
+  38, 6, 46, 14, 54, 22, 62, 30,
+  37, 5, 45, 13, 53, 21, 61, 29,
+  36, 4, 44, 12, 52, 20, 60, 28,
+  35, 3, 43, 11, 51, 19, 59, 27,
+  34, 2, 42, 10, 50, 18, 58, 26,
+  33, 1, 41,  9, 49, 17, 57, 25
+)
 
 /**
  * a list for key shifting the key value.
@@ -188,6 +198,8 @@ fun main(args: Array<String>) {
   var time = 0
   var pc1After: String
   
+  var finalAns = ""
+  
   shiftList.forEach{
     if (tmp == 0) {
       pc1After = pc1Mover(pc1, it)
@@ -213,10 +225,13 @@ fun main(args: Array<String>) {
     println("暗号平文 32bit: Left  $leftAns\n" +
         "　      32bit: Right $right")
     println()
+    finalAns = leftAns + right
   }
-  println()
-  val fin: String = transKeep[0] + transKeep[1]
-  println("最終的な暗号文 64bit: $fin")
+  var finally = ""
+  finalArray.forEach {
+    finally += finalAns[it - 1]
+  }
+  println("最終的な暗号文 64bit: $finally")
 }
 
 
