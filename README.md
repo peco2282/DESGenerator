@@ -19,18 +19,28 @@ $ git clone https://github.com/peco2282/DESGenerator.git
 
 暗号化する場合：
 
+:warning: 復号のjarファイルを作る場合、.jarファイルの名前を変えることを推奨します。
+
 2. コマンドプロンプトで `DESGenerator` フォルダに行き、`kotlinc -d DESGenerator.jar -include-runtime src/main/kotlin/Encode.kt` を実行
 3. `kotlin -cp DESGenerator.jar EncodeKt 平文(64bit)  鍵(64bit)`
    (例: `kotlin -cp DESGenerator.jar EncodeKt 00111010....(64bit-Plain)  1010010111....(64bit-Key)`)
 4.  16段目, 平文暗号が最後に出力されれば成功。
 
 復号する場合：
+
+:warning: 暗号化jarファイルを作る場合、.jarファイルの名前を変えることを推奨します。
+
 2. コマンドプロンプトで `DESGenerator` フォルダに行き、`kotlinc -d DESGenerator.jar -include-runtime src/main/kotlin/Decode.kt` を実行
 3. `kotlin -cp DESDenerator.jar DecodeKt 平文(64bit)　鍵(64bit)`
    (例: `kotlin -cp DESGenerator.jar DecodeKt 11101001....(64bit-Compiled)  1010010111....(64bit-Key) `)
 4.  16段目, 復号された平文が最後に出力されれば成功。
 
  16段目, 平文暗号が最後に出力されれば成功。
+
+両方を1つのjarに圧縮する場合。
+
+2. コマンドプロンプトで `DESGenerator` フォルダに行き、`kotlinc -d DESGenerator.jar -include-runtime src/main/kotlin/Encode.kt src/main/kotlin/Decode.kt` を実行
+3. `kotlin -cp DESGenerator.jar (EncodeKt 又は DecodeKt) 00110011....(平文または暗号化文-64bit) 11001100....(鍵-64bit)`
 
 ターミナルではなくてファイルとして出力したい場合
 
