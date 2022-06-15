@@ -11,7 +11,7 @@
  *
  * 56bit
  */
-val pc1Array: Array<Int> = arrayOf(
+private val pc1Array: Array<Int> = arrayOf(
   57, 49, 41, 33, 25, 17,  9,
   1, 58, 50, 42, 34, 26, 18,
   10,  2, 59, 51, 43, 35, 27,
@@ -27,7 +27,7 @@ val pc1Array: Array<Int> = arrayOf(
  *
  * 48bit
  */
-val pc2Array: Array<Int> = arrayOf(
+private val pc2Array: Array<Int> = arrayOf(
   14, 17, 11, 24,  1,  5,
   3, 28, 15,  6, 21, 10,
   23, 19, 12,  4, 26,  8,
@@ -43,7 +43,7 @@ val pc2Array: Array<Int> = arrayOf(
  *
  * 64bit
  */
-val initArray: Array<Int> = arrayOf(
+private val initArray: Array<Int> = arrayOf(
   58, 50, 42, 34, 26, 18, 10, 2,
   60, 52, 44, 36, 28, 20, 12, 4,
   62, 54, 46, 38, 30, 22, 14, 6,
@@ -59,7 +59,7 @@ val initArray: Array<Int> = arrayOf(
  *
  * 48bit
  */
-val transExtArray: Array<Int> = arrayOf(
+private val transExtArray: Array<Int> = arrayOf(
   32,  1,  2,  3,  4,  5,
   4,  5,  6,  7,  8,  9,
   8,  9, 10, 11, 12, 13,
@@ -76,7 +76,7 @@ val transExtArray: Array<Int> = arrayOf(
  *
  * 64bit * 8
  */
-val sBoxArray: Array<Array<Int>> = arrayOf(
+private val sBoxArray: Array<Array<Int>> = arrayOf(
   arrayOf(
     14,  4, 13,  1,  2, 15, 11,  8,  3, 10,  6, 12,  5,  9,  0,  7,
     0, 15,  7,  4, 14,  2, 13,  1, 10,  6, 12, 11,  9,  5,  3,  8,
@@ -132,7 +132,7 @@ val sBoxArray: Array<Array<Int>> = arrayOf(
  *
  * 32bit
  */
-val pArray: Array<Int> = arrayOf(
+private val pArray: Array<Int> = arrayOf(
   16,  7, 20, 21,
   29, 12, 28, 17,
   1, 15, 23, 26,
@@ -142,7 +142,7 @@ val pArray: Array<Int> = arrayOf(
   19, 13, 30,  6,
   22, 11,  4, 25
 )
-val finalArray: Array<Int> = arrayOf(
+private val finalArray: Array<Int> = arrayOf(
   40, 8, 48, 16, 56, 24, 64, 32,
   39, 7, 47, 15, 55, 23, 63, 31,
   38, 6, 46, 14, 54, 22, 62, 30,
@@ -156,7 +156,7 @@ val finalArray: Array<Int> = arrayOf(
 /**
  * a list for key shifting the key value.
  */
-val shiftList: List<Int> = listOf(
+private val shiftList: List<Int> = listOf(
   1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1
 )
 
@@ -217,7 +217,7 @@ fun main(args: Array<String>) {
     
     println("縮約転置 48bit: $pc2")
     
-    val ans = functionF(transKeep[1], pc2, true) // 32bit
+    val ans = functionF(transKeep[1], pc2) // 32bit
     leftAns = xOr(transKeep[0], ans) // 32bit XOR
     val right = transKeep[1]
     println("暗号平文 32bit: Left  $leftAns\n" +
@@ -241,7 +241,7 @@ fun main(args: Array<String>) {
  *
  * @param pc1After raw string value for create pc2.
  */
-fun pc2Maker(pc1After: String): String {
+private fun pc2Maker(pc1After: String): String {
   var pc2 = ""
   pc2Array.forEach {
     pc2 += pc1After[it - 1]
@@ -258,7 +258,7 @@ fun pc2Maker(pc1After: String): String {
  * @param param the value of translate.
  * @param shift the value for shift key.
  */
-fun pc1Mover(param: String, shift: Int): String {
+private fun pc1Mover(param: String, shift: Int): String {
   var pc1Shifted = ""
   param.chunked(28).forEach {
     pc1Shifted += (it.takeLast(28 - shift) + it.take(shift))
@@ -275,13 +275,13 @@ fun pc1Mover(param: String, shift: Int): String {
  * @param initRight 32bit, right value of initPlain Translated.
  * @param pc2 48bit, the value translated pc2.
  */
-fun functionF(initRight: String ,pc2: String, bool: Boolean): String { // 32bit, 48bit
+private fun functionF(initRight: String ,pc2: String): String { // 32bit, 48bit
   var transExt = "" // 拡大転置
   
   transExtArray.forEach {
     transExt += initRight[it - 1]
   }
-  if (bool)  println("拡大転置 48bit: $transExt         <- 拡大鍵")
+  println("拡大転置 48bit: $transExt         <- 拡大鍵")
   
   
   val rightList = transExt.chunked(6)
@@ -306,7 +306,7 @@ fun functionF(initRight: String ,pc2: String, bool: Boolean): String { // 32bit,
  * @param value 6bit, raw value for check SBOX.
  * @param pos position of sBoxArray.
  */
-fun sBox(value: String, pos: Int): String {
+private fun sBox(value: String, pos: Int): String {
   val h = (value.take(1) + value.takeLast(1)).toInt(2)
   val w = (value.substring(1 until 5)).toInt(2)
   var ans = sBoxArray[pos][h * 16 + w].toString(2)
@@ -332,7 +332,7 @@ fun sBox(value: String, pos: Int): String {
  * @param x check xor with y
  * @param y check xor with x
  */
-fun xOr(x: String, y: String): String {
+private fun xOr(x: String, y: String): String {
   if (x.length != y.length) return "-1"
   var xor = ""
   val time = (x.length - 1)
