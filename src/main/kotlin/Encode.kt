@@ -166,11 +166,9 @@ val shiftList: List<Int> = listOf(
 fun main(args: Array<String>) {
   val plain = args[0]
   val key = args[1]
-  if (plain.length != 64 || key.length != 64) {
-    println("you must put 64bit plain and key.\n" +
-        "\"PLAIN VALUE(64bit)\" \"KEY(64bit)\"")
-    return
-  }
+  if (plain.length != 64 || key.length != 64) return println(
+    "you must put 64bit plain and key.\nPLAIN VALUE(64bit)\" \"KEY(64bit)\""
+  )
   println("plain: $plain")
   println("key  : $key")
   
@@ -219,7 +217,7 @@ fun main(args: Array<String>) {
     
     println("縮約転置 48bit: $pc2")
     
-    val ans = functionF(transKeep[1], pc2) // 32bit
+    val ans = functionF(transKeep[1], pc2, true) // 32bit
     leftAns = xOr(transKeep[0], ans) // 32bit XOR
     val right = transKeep[1]
     println("暗号平文 32bit: Left  $leftAns\n" +
@@ -277,13 +275,13 @@ fun pc1Mover(param: String, shift: Int): String {
  * @param initRight 32bit, right value of initPlain Translated.
  * @param pc2 48bit, the value translated pc2.
  */
-fun functionF(initRight: String ,pc2: String): String { // 32bit, 48bit
+fun functionF(initRight: String ,pc2: String, bool: Boolean): String { // 32bit, 48bit
   var transExt = "" // 拡大転置
   
   transExtArray.forEach {
     transExt += initRight[it - 1]
   }
-  println("拡大転置 48bit: $transExt         <- 拡大鍵")
+  if (bool)  println("拡大転置 48bit: $transExt         <- 拡大鍵")
   
   
   val rightList = transExt.chunked(6)
